@@ -22,7 +22,7 @@ pipeline {
     }
     post {
         always {
-            emailtext(
+            emailext(
                 to: 'sushmaananda999@gmail.com',
                 subject: 'Build ${BUILD_NUMBER} - ${BUILD_STATUS}',
                 body: 'The build has completed with status: ${BUILD_STATUS}',
