@@ -1,7 +1,7 @@
 pipeline {
    agent any
    tools {
-    maven 'maven3'
+    maven 'maven'
    }
    stages {
       stage('git checkout') {
@@ -11,12 +11,12 @@ pipeline {
       }
       stage('compile') {
         steps {
-            sh 'mvn compile'
+            bat 'mvn compile'
         }
       }
       stage('build') {
         steps {
-            sh 'mvn package'
+            bat 'mvn package'
         }
       }
     }
