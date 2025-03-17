@@ -3,19 +3,20 @@ pipeline {
     maven 'maven'
    }
    stages {
-    stage('git checkout') {
+      stage('git checkout') {
         steps {
             git 'https://github.com/Sushmaa123/Chat_Room.git'
         }
-    }
-    stage('compile') {
+      }
+      stage('compile') {
         steps {
             bat 'mvn compile'
         }
-    }
-    stage('build') {
+      }
+      stage('build') {
         steps {
             bat 'mvn package'
         }
+      }
     }
-   }
+}    
