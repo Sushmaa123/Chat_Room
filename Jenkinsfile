@@ -11,7 +11,7 @@ pipeline {
             bat 'mvn compile'
         }
       }
-      stage('package') {
+      stage('build') {
         steps {
             bat 'mvn package'
         }
