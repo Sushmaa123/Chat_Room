@@ -6,7 +6,8 @@ pipeline {
    stages {
       stage('git checkout') {
         steps {
-            git 'https://github.com/Sushmaa123/Chat_Room.git'
+            git credentialsId: 'git-ssh', 
+                url: 'git@github.com:Sushmaa123/Chat_Room.git'
         }
       }
       stage('compile') {
