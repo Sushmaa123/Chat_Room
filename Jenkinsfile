@@ -6,8 +6,7 @@ pipeline {
    stages {
       stage('git checkout') {
         steps {
-            git credentialsId: 'git-ssh', 
-                url: 'git@github.com:Sushmaa123/Chat_Room.git'
+            git 'https://github.com/Sushmaa123/Chat_Room.git'  
         }
       }
       stage('compile') {
@@ -20,5 +19,15 @@ pipeline {
             sh 'mvn install'
         }
       }
+    }
+   post {
+        always {
+            emailext(
+                to: 'sushmaananda999@gmail.com',
+                subject: 'Build ${BUILD_NUMBER} - ${BUILD_STATUS}',
+                body: 'The build has completed with status: ${BUILD_STATUS}',
+                attachLog: true
+            )
+        }
     }
 }    
