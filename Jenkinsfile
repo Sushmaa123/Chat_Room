@@ -1,33 +1,34 @@
 pipeline {
    agent any
-   tools {
-    maven 'maven'
-   }
+
    stages {
       stage('git checkout') {
         steps {
             git 'https://github.com/Sushmaa123/Chat_Room.git'  
         }
       }
-      stage('compile') {
+      stage('code analysis') {
         steps {
-            sh 'mvn compile'
+            withSonarQubeEnv('sonar-server') {
+                sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Chat-Room \
+               -Dsonar.java.binaries=. \
+               -Dsonar.projectKey=Chat_Room'''
+               }
         }
       }
-      stage('package') {
+      stage('docker build') {
         steps {
-            sh 'mvn install'
-        }
+            script {
+              sh 'docker build -t chat-room .' 
+            }
       }
     }
-   post {
-        always {
-            emailext(
-                to: 'sushmaananda999@gmail.com',
-                subject: 'Build ${BUILD_NUMBER} - ${BUILD_STATUS}',
-                body: 'The build has completed with status: ${BUILD_STATUS}',
-                attachLog: true
-            )
-        }
-    }
+   stage('docker container) {
+         steps {
+            script {
+               sh 'docker run -itd --name chat-room -p 8082:8080 chat-room'
+              }
+          }
+    }    
+ }       
 }    
