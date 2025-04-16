@@ -1,6 +1,8 @@
 pipeline {
    agent any
-
+    environment {
+     SCANNER_HOME = tool 'sonar-scanner'
+    }
    stages {
       stage('git checkout') {
         steps {
@@ -10,7 +12,7 @@ pipeline {
       stage('code analysis') {
         steps {
             withSonarQubeEnv('sonar-server') {
-                sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Chat-Room \
+                sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Chat_Room \
                -Dsonar.java.binaries=. \
                -Dsonar.projectKey=Chat_Room'''
                }
